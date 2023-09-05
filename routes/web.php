@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< HEAD
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -30,3 +31,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function () {
     return view('runvue');
 })->where('any','.*');
+=======
+Route::get('/', function () {
+    return view('welcome');
+});
+>>>>>>> parent of c4662b8 (installed jetstream with livewire for authentication)
