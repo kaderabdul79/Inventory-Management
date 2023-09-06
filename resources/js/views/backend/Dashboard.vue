@@ -67,8 +67,8 @@
             ></v-list-item>
         </v-navigation-drawer>
         <!-- drawer -->
-        <v-app-bar class="px-2" :elevation="2">
-            <div class="my-header w-100">
+        <v-app-bar class="px-2" :elevation="2" background="#26A69A">
+            <div class="my-header w-100" background="#26A69A">
             <div class="pt-2">Inventory Management</div>
             <div class="profile">
                 <v-avatar size="36px">
