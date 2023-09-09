@@ -36,7 +36,7 @@
                         <td>{{ category.name }}</td>
                         <td>{{ category.is_active === 1 ? 'active' : 'inactive' }}</td>
                         <td>
-                        <v-btn color="red-darken-1">Delete</v-btn>
+                        <v-btn @click="deleteCategory(category.id)" color="red-darken-1">Delete</v-btn>
                         </td>
                     </tr>
                     </tbody>
@@ -66,6 +66,17 @@ const categories = ref([])
     onMounted(()=>{
         getAllCategories()
     })
+// delete a category
+    function deleteCategory(id){
+        axios.delete('categories/'+id)
+        .then(response => {
+            getAllCategories()
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
 </script>
 
 <style scoped>
