@@ -16,6 +16,11 @@ const router = createRouter({
           name: 'dashboardOverview',
           component: () => import('../views/backend/Overview.vue'),
         },
+        {
+          path: 'categories',
+          name: 'categories',
+          component: () => import('../views/backend/category/Categories.vue'),
+        },
       ]
     },
   ]
