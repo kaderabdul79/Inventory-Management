@@ -52,6 +52,8 @@
 import { ref,onMounted } from 'vue';
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+import { useNotification } from "@kyvg/vue3-notification";
+const notification = useNotification()
 const categories = ref([])         
 
     function getAllCategories(){
@@ -71,6 +73,7 @@ const categories = ref([])
     function deleteCategory(id){
         axios.delete('categories/'+id)
         .then(response => {
+            notification.notify({title: "Category Deleted",});
             getAllCategories()
             console.log(response.data);
         })

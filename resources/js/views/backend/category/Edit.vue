@@ -30,6 +30,8 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+import { useNotification } from "@kyvg/vue3-notification";
+const notification = useNotification()
 const form = ref(new Form(
     {
         name: '',
@@ -58,6 +60,7 @@ const form = ref(new Form(
             is_active: form.value.is_active
         })
             .then(response => {
+                notification.notify({title: "Category Updated 🎉",});
                 setTimeout(()=>{
                     router.push({name: "categories"})
                 },2000)

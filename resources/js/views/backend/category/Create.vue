@@ -30,6 +30,8 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+import { useNotification } from "@kyvg/vue3-notification";
+const notification = useNotification()
 const router = useRouter()
 const form = ref(new Form(
     {
@@ -44,6 +46,7 @@ function addNewCategory() {
         is_active: form.value.is_active
     })
         .then(response => {
+            notification.notify({title: "Category Created 🎉",});
             setTimeout(()=>{
                 router.push({name: "categories"})
             },2000)
