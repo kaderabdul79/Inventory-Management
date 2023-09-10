@@ -5,6 +5,7 @@
                 <v-col cols="12">
                     <v-sheet class="d-flex justify-space-between">
                         <h2 class="">List of Categories</h2>
+                        <div><v-btn :to="{name: 'createCategory'}" color="primary" class="">Add New</v-btn></div>
                     </v-sheet>
                     <v-table
                     fixed-header
@@ -30,13 +31,13 @@
                     <tr
                         v-for="category in categories"
                         :key="category.id"
-                    >
-                    
+                    > 
                         <td>{{ category.id }}</td>
                         <td>{{ category.name }}</td>
                         <td>{{ category.is_active === 1 ? 'active' : 'inactive' }}</td>
                         <td>
-                        <v-btn @click="deleteCategory(category.id)" color="red-darken-1">Delete</v-btn>
+                            <v-btn :to="{name: 'editcategory',params: {id: category.id}}" class="mr-3" color="success">Edit</v-btn>
+                            <v-btn @click="deleteCategory(category.id)" color="red-darken-1">Delete</v-btn>
                         </td>
                     </tr>
                     </tbody>

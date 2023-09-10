@@ -21,6 +21,17 @@ const router = createRouter({
           name: 'categories',
           component: () => import('../views/backend/category/Categories.vue'),
         },
+        {
+          path: 'categories/create',
+          name: 'createCategory',
+          component: () => import('../views/backend/category/Create.vue'),
+        },
+        {
+          path: 'categories/:id/edit',
+          props: true,
+          name: 'editcategory',
+          component: () => import('../views/backend/category/Edit.vue'),
+        },
       ]
     },
   ]

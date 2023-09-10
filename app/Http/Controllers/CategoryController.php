@@ -29,7 +29,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories',
+            'is_active' => 'boolean',
+        ]);
+
+        $category = Category::create([
+            'name' => $request->name,
+            'is_active' => $request->is_active,
+        ]);
+
+        return response()->json(['category' => $category], 201);
     }
 
     /**
@@ -43,9 +53,16 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    // edit getegory
+    public function edit($id){
+        // Find the category by ID
+        $category = Category::findorFail($id);
+
+        // Check if the category exists
+        if (!$category) {
+            return response()->json("Category not found!", 404);
+        }
+        return response()->json($category, 200);
     }
 
     /**
@@ -53,7 +70,26 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'boolean',
+        ]);
+    
+        // Find the existing user
+        $category = Category::findOrFail($id);
+    
+        // Check if the category exists
+        if (!$category) {
+            return response()->json("Category not found!", 404);
+        }
+    
+        // Update the existing Category
+        $category->update([
+            'name' => $request->name,
+            'is_active' => $request->is_active,
+        ]);
+    
+        return response()->json($category,200);
     }
 
     /**
