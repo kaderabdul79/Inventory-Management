@@ -32,6 +32,23 @@ const router = createRouter({
           name: 'editcategory',
           component: () => import('../views/backend/category/Edit.vue'),
         },
+        // sizes
+        {
+          path: 'sizes',
+          name: 'sizes',
+          component: () => import('../views/backend/size/Sizes.vue'),
+        },
+        {
+          path: 'sizes/create',
+          name: 'createSize',
+          component: () => import('../views/backend/size/Create.vue'),
+        },
+        {
+          path: 'sizes/:id/edit',
+          props: true,
+          name: 'editSize',
+          component: () => import('../views/backend/size/Edit.vue'),
+        },
       ]
     },
   ]
