@@ -49,6 +49,23 @@ const router = createRouter({
           name: 'editSize',
           component: () => import('../views/backend/size/Edit.vue'),
         },
+        // brands
+        {
+          path: 'brands',
+          name: 'brands',
+          component: () => import('../views/backend/brand/Brands.vue'),
+        },
+        {
+          path: 'brands/create',
+          name: 'createBrand',
+          component: () => import('../views/backend/brand/Create.vue'),
+        },
+        {
+          path: 'brands/:id/edit',
+          props: true,
+          name: 'editBrand',
+          component: () => import('../views/backend/brand/Edit.vue'),
+        },
       ]
     },
   ]
