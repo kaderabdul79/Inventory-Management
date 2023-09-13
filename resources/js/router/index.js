@@ -66,6 +66,29 @@ const router = createRouter({
           name: 'editBrand',
           component: () => import('../views/backend/brand/Edit.vue'),
         },
+        // products
+        {
+          path: 'products',
+          name: 'products',
+          component: () => import('../views/backend/product/Products.vue'),
+        },
+        {
+          path: 'products/create',
+          name: 'createProduct',
+          component: () => import('../views/backend/product/Create.vue'),
+        },
+        {
+          path: 'products/:id/edit',
+          props: true,
+          name: 'editProduct',
+          component: () => import('../views/backend/product/Edit.vue'),
+        },
+        {
+          path: 'products/:id/view',
+          props: true,
+          name: 'viewProduct',
+          component: () => import('../views/backend/product/View.vue'),
+        },
       ]
     },
   ]
