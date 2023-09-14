@@ -29,7 +29,8 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    { 
+        // return $request;
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -39,10 +40,11 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'quantity_in_stock' => 'required|integer',
         ]);
-
+        // return $request;
         $product = Product::create($request->all());
 
         return response()->json(['product' => $product], 201);
+
     }
 
     /**
@@ -67,16 +69,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        
         $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'size_id' => 'required|exists:sizes,id',
-            'brand_id' => 'required|exists:brands,id',
+            // 'category_id' => 'required|exists:categories,id',
+            // 'size_id' => 'required|exists:sizes,id',
+            // 'brand_id' => 'required|exists:brands,id',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'quantity_in_stock' => 'required|integer',
         ]);
-
+        return $request;
         $product->update($request->all());
 
         return response()->json(['product' => $product], 200);
@@ -87,6 +90,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // $product->size->delete();
+        // $product->brand->delete();
+        // $product->category->delete();
         $product->delete();
 
         return response()->json([], 202);
