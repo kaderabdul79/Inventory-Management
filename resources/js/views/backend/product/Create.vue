@@ -113,7 +113,13 @@ const sizes = ref([])
         });
     }
 // 
-function addNewProduct() {
+function addNewProduct() { 
+    // if not active any of this, don't send request
+    if (product.value.category_id === null || product.value.size_id === null || product.value.brand_id === null) {
+      alert('Please make active, category, size, and brand before adding the product.');
+      return;
+    }
+    // 
     axios.post('products/',     {
       name: product.value.name,
       description: product.value.description,
