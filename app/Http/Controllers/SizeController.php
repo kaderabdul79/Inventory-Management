@@ -104,4 +104,11 @@ class SizeController extends Controller
     
         return response()->json([], 204);
     }
+
+    // only get active sizes
+    public function getActiveSizes()
+    {
+        $activeSizes = Size::where('is_active', true)->get();
+        return response()->json(['size' => $activeSizes], 200);
+    }
 }

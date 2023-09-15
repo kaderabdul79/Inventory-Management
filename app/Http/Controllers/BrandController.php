@@ -104,4 +104,11 @@ class BrandController extends Controller
     
         return response()->json([], 204);
     }
+
+    // only get active brands
+    public function getActiveBrands()
+    {
+        $activeBrands = Brand::where('is_active', true)->get();
+        return response()->json(['brand' => $activeBrands], 200);
+    }
 }

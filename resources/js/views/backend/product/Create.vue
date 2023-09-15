@@ -78,10 +78,10 @@ const product = ref(new Form(
 // brands
 const brands = ref([])          
     function getAllBrands(){
-        axios.get('brands')
+        axios.get('active-brands')
         .then(response => {
             // console.log(response);
-            brands.value = response.data?.brands
+            brands.value = response.data?.brand
         } )
         .catch(error => {
             console.error(error);
@@ -90,10 +90,10 @@ const brands = ref([])
 // category
 const categories = ref([])    
 function getAllCategories(){
-        axios.get('categories/')
+        axios.get('active-categories')
         .then(response => {
-            // console.log(response.data.categories);
-            categories.value = response.data?.categories
+            console.log(response.data.category);
+            categories.value = response.data?.category
         } )
         .catch(error => {
             console.error(error);
@@ -103,10 +103,10 @@ function getAllCategories(){
 const sizes = ref([])         
 
     function getAllSizes(){
-        axios.get('sizes/')
+        axios.get('active-sizes/')
         .then(response => {
             // console.log(response.data.sizes);
-            sizes.value = response.data?.sizes
+            sizes.value = response.data?.size
         } )
         .catch(error => {
             console.error(error);

@@ -103,4 +103,11 @@ class CategoryController extends Controller
     
         return response()->json([], 204);
     }
+
+    // only get active categories
+    public function getActiveCategories()
+    {
+        $activeCategories = Category::where('is_active', true)->get();
+        return response()->json(['category' => $activeCategories], 200);
+    }
 }

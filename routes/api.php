@@ -28,10 +28,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Categories
 Route::resource('categories', CategoryController::class);
+Route::get('/active-categories', [CategoryController::class,'getActiveCategories']);
 // Sizes
 Route::resource('sizes', SizeController::class);
+Route::get('/active-sizes', [SizeController::class,'getActiveSizes']);
+
 // Brands
 Route::resource('brands', BrandController::class);
+Route::get('/active-brands', [BrandController::class,'getActiveBrands']);
 // Products
 Route::resource('products', ProductController::class);
 
