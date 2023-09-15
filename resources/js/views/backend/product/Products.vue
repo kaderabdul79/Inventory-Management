@@ -47,10 +47,10 @@
                         <td>{{ product.id }}</td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.price }}</td>                        
-                        <td>{{ product.quantity_in_stock }}</td>  
-                        <td>{{ product.category.name }}</td>  
-                        <td>{{ product.size.name }}</td>  
-                        <td>{{ product.brand.name }}</td>  
+                        <td :class="{ 'bg-red': product.quantity_in_stock < 50 }">{{ product.quantity_in_stock }}</td>  
+                        <td :class="{ 'text-green': product.category.is_active, 'text-red': !product.category.is_active }">{{ product.category.name }}</td>  
+                        <td :class="{ 'text-green': product.size.is_active, 'text-red': !product.size.is_active }">{{ product.size.name }}</td>  
+                        <td :class="{ 'text-green': product.brand.is_active, 'text-red': !product.brand.is_active }">{{ product.brand.name }}</td>  
                         <td>
                             <v-btn :to="{name: 'viewProduct',params: {id: product.id}}" color="success">View</v-btn>
                             <v-btn :to="{name: 'editProduct',params: {id: product.id}}" class="mr-3" color="success">Edit</v-btn>
@@ -81,7 +81,7 @@ const products = ref([])
         .catch(error => {
             console.error(error);
         });
-    }
+    } 
     onMounted(()=>{
         getAllProducts()
     })
