@@ -52,9 +52,9 @@
                         <td :class="{ 'text-green': product.size.is_active, 'text-red': !product.size.is_active }">{{ product.size.name }}</td>  
                         <td :class="{ 'text-green': product.brand.is_active, 'text-red': !product.brand.is_active }">{{ product.brand.name }}</td>  
                         <td>
-                            <v-btn :to="{name: 'viewProduct',params: {id: product.id}}" color="success">View</v-btn>
-                            <v-btn :to="{name: 'editProduct',params: {id: product.id}}" class="mr-3" color="success">Edit</v-btn>
-                            <v-btn @click="deleteProduct(product.id)" color="red-darken-1">Delete</v-btn>
+                            <v-btn :to="{name: 'viewProduct',params: {id: product.id}}" class="mr-3"  color="success">View</v-btn>
+                            <v-btn :to="{name: 'editProduct',params: {id: product.id}}" class="mr-3" color="warning">Edit</v-btn>
+                            <v-btn @click="deleteProduct(product.id)" color="danger">Delete</v-btn>
                         </td>
                     </tr>
                     </tbody>
