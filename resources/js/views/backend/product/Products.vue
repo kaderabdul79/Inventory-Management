@@ -1,10 +1,12 @@
 <template>
     <div id="products">  
         <v-container fluid>
-            <v-row>
+            <v-row>{{ filteredProducts }}{{ searchQuery }}
                  <v-col cols="12">
                     <v-sheet class="d-flex justify-space-between px-6 py-2">
                         <h2 class="">List of Products</h2>
+                        <v-text-field v-model="searchQuery" @input="searchProducts" label="Search Product" prepend-inner-icon="mdi-magnify" density="dense" class="py-2"></v-text-field>
+                        <!-- <v-text-field v-model="search" label="Search Product" class="pa-1"></v-text-field> -->
                         <div><v-btn :to="{name: 'createProduct'}" color="primary" class="">Add New</v-btn></div>
                     </v-sheet>
                     <v-table
@@ -80,17 +82,30 @@ import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 import { useNotification } from "@kyvg/vue3-notification";
 import { TailwindPagination } from 'laravel-vue-pagination';
-
+// 
+const searchQuery = ref("")
+const filteredProducts = ref([])
 const notification = useNotification()
 const products = ref([])     
 
 const product = ref({})        
 const totalPages = ref(1)  
 const perPage = ref(8) 
+// 
+function searchProducts() {
+            axios.get(`products/search?query=${searchQuery.value}`)
+                .then(response => {
+                    console.log(response);
+                    // filteredProducts.value = response.data?.products;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+}
 function getAllProducts (page = 1) {
   axios.get(`products?page=${page}&perPage=${perPage.value}`)
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             products.value = response.data?.products?.data
             product.value = response.data?.products
             totalPages.value =response.data?.products?.last_page;
@@ -117,4 +132,7 @@ function getAllProducts (page = 1) {
     }
 </script>
 <style scoped>
+nav.d-inline-block button svg {
+    display: none;
+}
 </style>
