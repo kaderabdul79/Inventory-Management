@@ -2,14 +2,14 @@
     <div id="products">  
         <v-container fluid>
             <v-row>
-                <v-col cols="12">
-                    <v-sheet class="d-flex justify-space-between">
+                 <v-col cols="12">
+                    <v-sheet class="d-flex justify-space-between px-6 py-2">
                         <h2 class="">List of Products</h2>
                         <div><v-btn :to="{name: 'createProduct'}" color="primary" class="">Add New</v-btn></div>
                     </v-sheet>
                     <v-table
                     fixed-header
-                    height="600px"
+                    height="500px"
                 >
                     <thead class="">
                     <tr>
@@ -47,7 +47,7 @@
                         <td>{{ product.id }}</td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.price }}</td>                        
-                        <td :class="{ 'bg-red': product.quantity_in_stock < 50 }">{{ product.quantity_in_stock }}</td>  
+                        <td :class="{ 'text-red': product.quantity_in_stock < 50 }">{{ product.quantity_in_stock }}</td>  
                         <td :class="{ 'text-green': product.category.is_active, 'text-red': !product.category.is_active }">{{ product.category.name }}</td>  
                         <td :class="{ 'text-green': product.size.is_active, 'text-red': !product.size.is_active }">{{ product.size.name }}</td>  
                         <td :class="{ 'text-green': product.brand.is_active, 'text-red': !product.brand.is_active }">{{ product.brand.name }}</td>  
@@ -61,22 +61,39 @@
                 </v-table>
                 </v-col>
             </v-row>
+                    <!-- pagination -->
+                    <v-sheet class="w-100 mt-2 d-flex justify-space-between">
+                        <div class="d-block"></div>
+                        <TailwindPagination class="d-inline-block"
+                        :data="product"
+                        @pagination-change-page="getAllProducts"
+                        />
+                    </v-sheet>
+                    <!--  -->
         </v-container>
     </div>
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue';
+import { ref,onMounted,computed } from 'vue';
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 import { useNotification } from "@kyvg/vue3-notification";
+import { TailwindPagination } from 'laravel-vue-pagination';
+
 const notification = useNotification()
-const products = ref([])         
-    function getAllProducts(){
-        axios.get('products/')
+const products = ref([])     
+
+const product = ref({})        
+const totalPages = ref(1)  
+const perPage = ref(8) 
+function getAllProducts (page = 1) {
+  axios.get(`products?page=${page}&perPage=${perPage.value}`)
         .then(response => {
             console.log(response.data);
-            products.value = response.data?.products
+            products.value = response.data?.products?.data
+            product.value = response.data?.products
+            totalPages.value =response.data?.products?.last_page;
         } )
         .catch(error => {
             console.error(error);
@@ -85,6 +102,7 @@ const products = ref([])
     onMounted(()=>{
         getAllProducts()
     })
+
 // delete a Product
     function deleteProduct(id){
         axios.delete('products/'+id)

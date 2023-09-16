@@ -10,10 +10,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $products = Product::all();
-        $products = Product::with('category', 'size', 'brand')->get();
+        $perPage = $request->input('perPage', $request->perPage);
+        $products = Product::with('category', 'size', 'brand')->paginate($perPage);
+
         return response()->json(['products' => $products], 200);
     }
 
