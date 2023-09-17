@@ -39,8 +39,3 @@ Route::get('/active-brands', [BrandController::class,'getActiveBrands']);
 // Products
 Route::resource('products', ProductController::class);
 Route::get('products/search', [ProductController::class,'search']);
-
-
-
-
-

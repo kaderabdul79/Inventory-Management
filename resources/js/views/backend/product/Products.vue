@@ -4,10 +4,12 @@
             <v-row>{{ filteredProducts }}{{ searchQuery }}
                  <v-col cols="12">
                     <v-sheet class="d-flex justify-space-between px-6 py-2">
-                        <h2 class="">List of Products</h2>
-                        <v-text-field v-model="searchQuery" @input="searchProducts" label="Search Product" prepend-inner-icon="mdi-magnify" density="dense" class="py-2"></v-text-field>
-                        <!-- <v-text-field v-model="search" label="Search Product" class="pa-1"></v-text-field> -->
-                        <div><v-btn :to="{name: 'createProduct'}" color="primary" class="">Add New</v-btn></div>
+                        <v-row>
+                            <v-col><h2 class="">List of Products</h2></v-col>
+                            <v-col><v-text-field v-model="searchQuery" @input="searchProducts" label="Search Product" prepend-inner-icon="mdi-magnify"></v-text-field></v-col>
+                            <v-col class="text-end"><v-btn :to="{name: 'createProduct'}" color="primary">Add New</v-btn></v-col>
+                        <div></div>
+                        </v-row>
                     </v-sheet>
                     <v-table
                     fixed-header
@@ -91,7 +93,7 @@ const products = ref([])
 const product = ref({})        
 const totalPages = ref(1)  
 const perPage = ref(8) 
-// 
+// its must need to fixed
 function searchProducts() {
             axios.get(`products/search?query=${searchQuery.value}`)
                 .then(response => {
@@ -102,6 +104,7 @@ function searchProducts() {
                     console.error(error);
                 });
 }
+
 function getAllProducts (page = 1) {
   axios.get(`products?page=${page}&perPage=${perPage.value}`)
         .then(response => {

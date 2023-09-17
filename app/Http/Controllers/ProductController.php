@@ -99,31 +99,18 @@ class ProductController extends Controller
 
     // product search by name and description
     public function search(Request $request)
-    { 
+    {
+        // return $request->params;
         $query = $request->input('query');
-return  $query;
-        $products = Product::where('name', 'like', "%$query%")
-                            ->orWhere('description', 'like', "%$query%")
-                            ->get();
-    
-        return response()->json($products);
-        // return $request->searchQuery;
-        // try {
-        //     $searchQuery = $request->input('query');
-        //     $product = Product::where('name', 'like', "%$searchQuery%")
-        //         // ->orWhere('description', 'like', "%$searchQuery%")
-        //         ->first();
-    
-        //     if (!$product) {
-        //         return response()->json(['message' => 'No results found.'], 404);
-        //     }
-    
-        //     return response()->json(['product' => $product], 200);
-        // } catch (\Exception $e) {
-        //     // Handle other exceptions if needed
-        //     return response()->json(['error' => 'Internal Server Error'], 500);
-        // }
+        
+        $products = Product::where('name', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%")
+            ->get();
+        
+        return response()->json(['products' => $products], 200);
+        
     }
+    
     
 
 }
