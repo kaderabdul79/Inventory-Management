@@ -89,6 +89,17 @@ const router = createRouter({
           name: 'viewProduct',
           component: () => import('../views/backend/product/View.vue'),
         },
+        // stocks
+        {
+          path: 'stocks',
+          name: 'stocks',
+          component: () => import('../views/backend/stock/Stocks.vue'),
+        },
+        {
+          path: 'stocks/create',
+          name: 'createStocks',
+          component: () => import('../views/backend/stock/Create.vue'),
+        },
       ]
     },
   ]

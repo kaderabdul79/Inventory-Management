@@ -31,6 +31,7 @@ class StocksSeeder extends Seeder
                     'product_id' => $product->id,
                     'size_id' => $size->id,
                     'quantity' => 5, //default quantity I set it to 5
+                    'location' => 'B',
                 ]);
             }
         }
