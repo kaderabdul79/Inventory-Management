@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             BrandsSeeder::class,
             ProductsSeeder::class,
             StocksSeeder::class,
-
         ]);
     }
 }

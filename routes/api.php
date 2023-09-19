@@ -4,11 +4,9 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\StockController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
-
 
 
 /*
@@ -39,3 +37,6 @@ Route::get('/active-brands', [BrandController::class,'getActiveBrands']);
 // Products
 Route::resource('products', ProductController::class);
 Route::get('products/search', [ProductController::class,'search']);
+
+// stocks
+Route::resource('stocks', StockController::class);

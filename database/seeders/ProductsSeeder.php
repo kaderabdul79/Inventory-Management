@@ -43,11 +43,13 @@ class ProductsSeeder extends Seeder
 
         $stock1 = Stock::create([
             'product_id' => $product1->id,
+            'size_id' => $product1->size_id,
             'quantity' => 50,
         ]);
 
         $stock2 = Stock::create([
             'product_id' => $product2->id,
+            'size_id' => $product2->size_id,
             'quantity' => 25,
         ]);
     }

@@ -1,7 +1,8 @@
 <template>
     <div id="products">  
         <v-container fluid>
-            <v-row>{{ filteredProducts }}{{ searchQuery }}
+            <v-row>
+                <!-- {{ filteredProducts }}{{ searchQuery }} -->
                  <v-col cols="12">
                     <v-sheet class="d-flex justify-space-between px-6 py-2">
                         <v-row>
