@@ -15,6 +15,10 @@
                             <v-text-field v-model="product.description" label="Description" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('description')" v-html="product.errors.get('description')" />
                             <!--  -->
+                            <!-- product image -->
+                            <v-file-input type="file" @change="handleFileChange" v-model="product.profile" label="Upload Product Picture"></v-file-input>
+                            <div class="text-subtitle-2 text-red" v-if="product.errors.has('picture')" v-html="product.errors.get('picture')" />
+                            <!--  -->
                             <v-text-field v-model="product.quantity_in_stock" label="quantity_in_stock" type="number" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('quantity_in_stock')" v-html="product.errors.get('quantity_in_stock')" />
                             <!--  -->
@@ -73,6 +77,7 @@ const product = ref(new Form(
         category_id: null,
         size_id: null,
         brand_id: null,
+        picture: null,
     }
 ));
 // brands
@@ -87,6 +92,9 @@ const brands = ref([])
             console.error(error);
         });
     }
+const handleFileChange = (event) => {
+    product.value.picture = event.target.files[0];
+};   
 // category
 const categories = ref([])    
 function getAllCategories(){
@@ -114,23 +122,41 @@ const sizes = ref([])
     }
 // 
 function addNewProduct() { 
+    // 
+    const formData = new FormData();
+    formData.append('name', product.value.name);
+    formData.append('description',product.value.description);
+    formData.append('price',product.value.price);
+    formData.append('size',product.value.size);
+    formData.append('quantity_in_stock',product.value.quantity_in_stock);
+    formData.append('category_id',product.value.category_id);
+    formData.append('size_id',product.value.size_id);
+    formData.append('brand_id',product.value.brand_id);
+    formData.append('picture',product.value.picture);
+    //   
     // if not active any of this, don't send request
     if (product.value.category_id === null || product.value.size_id === null || product.value.brand_id === null) {
       alert('Please make active, category, size, and brand before adding the product.');
       return;
     }
     // 
-    axios.post('products/',     {
-      name: product.value.name,
-      description: product.value.description,
-      price: product.value.price,
-      size: product.value.size,
-      quantity_in_stock: product.value.quantity_in_stock,
-      category_id: product.value.category_id,
-      size_id: product.value.size_id,
-      brand_id: product.value.brand_id
-    })
+    axios.post('products/',    formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },}
+    //  {
+    //   name: product.value.name,
+    //   description: product.value.description,
+    //   price: product.value.price,
+    //   size: product.value.size,
+    //   quantity_in_stock: product.value.quantity_in_stock,
+    //   category_id: product.value.category_id,
+    //   size_id: product.value.size_id,
+    //   brand_id: product.value.brand_id
+    // }
+    )
         .then(response => {
+            console.log(response);
             notification.notify({title: "Product has been added Inventory 🎉",});
             setTimeout(()=>{
                 router.push({name: "products"})

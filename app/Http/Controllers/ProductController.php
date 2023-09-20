@@ -40,10 +40,31 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'quantity_in_stock' => 'required|integer',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         // return $request;
-        $product = Product::create($request->all());
+        // $product = Product::create($request->all());
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->category_id = $request->input('category_id');
+        $product->size_id = $request->input('size_id');
+        $product->brand_id = $request->input('brand_id');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->quantity_in_stock = $request->input('quantity_in_stock');
 
+        // Handle file upload
+        if ($request->hasFile('picture')) {
+            // return $request->file('picture');
+            $file = $request->file('picture');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('products_picture', $fileName, 'public');
+            // return $fileName;
+            $product->picture = $fileName;
+        }else{
+            return "file ni";
+        }
+        $product->save();
         return response()->json(['product' => $product], 201);
 
     }
