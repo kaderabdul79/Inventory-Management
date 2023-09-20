@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -62,7 +63,7 @@ class ProductController extends Controller
             // return $fileName;
             $product->picture = $fileName;
         }else{
-            return "file ni";
+            return "Problem to upload the image";
         }
         $product->save();
         return response()->json(['product' => $product], 201);
@@ -113,8 +114,13 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        $imagePath = public_path('products_image/' . $product->image);
         $product->delete();
-    
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
         return response()->json([], 204);
     }
 

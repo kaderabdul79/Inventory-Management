@@ -24,6 +24,9 @@
                         <th class="text-center">
                             Name
                         </th>
+                        <td class="text-center">
+                            Product Image
+                        </td>
                         <th class="text-center">
                             Price
                         </th>
@@ -51,6 +54,11 @@
                     > 
                         <td>{{ product.id }}</td>
                         <td>{{ product.name }}</td>
+                        <td>
+                            <v-avatar size="45">
+                                <v-img :src="product.picture ? `http://localhost:8000/storage/products_picture/${product.picture}` : 'https://via.placeholder.com/150'" alt="product image"></v-img>
+                            </v-avatar>
+                        </td>
                         <td>{{ product.price }}</td>                        
                         <td :class="{ 'text-red': product.quantity_in_stock < 50 }">{{ product.quantity_in_stock }}</td>  
                         <td :class="{ 'text-green': product.category.is_active, 'text-red': !product.category.is_active }">{{ product.category.name }}</td>  

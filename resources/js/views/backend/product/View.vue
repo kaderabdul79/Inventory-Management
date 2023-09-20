@@ -1,7 +1,7 @@
 <template>
     <div class="viewproduct">{{ form }}
         <v-container fluid>
-            <v-row>{{ product }}
+            <v-row>
                 <v-col cols="12">
                     <v-sheet class="d-flex justify-space-between">
                         <h2 class="">Product Detail's</h2>
@@ -18,6 +18,9 @@
                         </th>
                         <th class="text-center">
                             Name
+                        </th>
+                        <th class="text-center">
+                            Product Image
                         </th>
                         <th class="text-center">
                             Description
@@ -45,6 +48,11 @@
                     > 
                         <td>{{ product.id }}</td>
                         <td>{{ product.name }}</td>
+                        <td>
+                            <v-avatar size="45">
+                                <v-img :src="product.picture ? `http://localhost:8000/storage/products_picture/${product.picture}` : 'https://via.placeholder.com/150'" alt="product image"></v-img>
+                            </v-avatar>
+                        </td>
                         <td>{{ product.description }}</td>
                         <td>{{ product.price }}</td>                        
                         <td>{{ product.quantity_in_stock }}</td>  
