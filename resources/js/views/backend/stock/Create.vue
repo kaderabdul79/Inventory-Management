@@ -1,26 +1,27 @@
 <template>
     <div id="createstock">
-        <v-container fluid>{{ form }}
+        <v-container fluid>
+            <!-- {{ stockData }} -->
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
                     <v-sheet>
                         <v-sheet class="text-h4 py-2 text-center">Add Stock</v-sheet>
                         <v-form @submit.prevent="addNewStock">
                             Select Product
-                            <select id="brandDropdown" v-model="form.product_id">
+                            <select id="brandDropdown" v-model="stockData.product_id">
                                 <option v-for="product in products" :key="product.id" :value="product.id">
                                     {{ product.name }}
                                 <p>Size: {{ product.size.name }}</p>
                                 </option>
                             </select>
-                            <div class="text-subtitle-2 text-red" v-if="form.errors.has('product_id')" v-html="form.errors.get('product_id')" />
+                            <div class="text-subtitle-2 text-red" v-if="stockData.errors.has('product_id')" v-html="stockData.errors.get('product_id')" />
                             <!-- quantity -->
-                            <v-text-field v-model="form.quantity" label="Quantity" variant="outlined"></v-text-field> 
-                            <div class="text-subtitle-2 text-red" v-if="form.errors.has('quantity')" v-html="form.errors.get('quantity')" />
+                            <v-text-field v-model="stockData.quantity" label="Quantity" variant="outlined"></v-text-field> 
+                            <div class="text-subtitle-2 text-red" v-if="stockData.errors.has('quantity')" v-html="stockData.errors.get('quantity')" />
                             <!-- location -->
-                            <v-text-field v-model="form.location" label="Location" variant="outlined"></v-text-field> 
-                            <div class="text-subtitle-2 text-red" v-if="form.errors.has('location')" v-html="form.errors.get('location')" />
-                            <v-btn type="submit" :disabled="form.busy" color="success" block>Submit</v-btn>
+                            <v-text-field v-model="stockData.location" label="Location" variant="outlined"></v-text-field> 
+                            <div class="text-subtitle-2 text-red" v-if="stockData.errors.has('location')" v-html="stockData.errors.get('location')" />
+                            <v-btn type="submit" :disabled="stockData.busy" color="success" block>Submit</v-btn>
                         </v-form>
                         <v-sheet>
                         </v-sheet>
@@ -40,7 +41,7 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
 import { useNotification } from "@kyvg/vue3-notification";
 const notification = useNotification()
 const router = useRouter()
-const form = ref(new Form(
+const stockData = ref(new Form(
     {
         product_id: null,
         size_id: 2,
@@ -54,9 +55,9 @@ const sizes = ref([])
     function getAllSizes(){
         axios.get('sizes/')
         .then(response => {
-            console.log(response.data.sizes);
+            // console.log(response.data.sizes);
             sizes.value = response.data?.sizes
-            console.log(sizes.value);
+            // console.log(sizes.value);
         } )
         .catch(error => {
             console.error(error);
@@ -72,7 +73,7 @@ function getAllProducts (page = 1) {
 
   axios.get('products')
         .then(response => {
-            console.log(response.data.products);
+            // console.log(response.data.products);
             products.value = response.data?.products?.data
         } )
         .catch(error => {
@@ -83,10 +84,10 @@ function getAllProducts (page = 1) {
 // 
 function addNewStock() {
     axios.post('stocks/', {
-        product_id: form.value.product_id,
-        size_id: form.value.size_id,
-        quantity: form.value.quantity,
-        location: form.value.location,
+        product_id: stockData.value.product_id,
+        size_id: stockData.value.size_id,
+        quantity: stockData.value.quantity,
+        location: stockData.value.location,
     })
         .then(response => {
             notification.notify({title: "The Produt has been stocked🎉",});
@@ -96,7 +97,7 @@ function addNewStock() {
             console.log(response.data);
         })
         .catch(error => {
-            form.value.errors.errors = error.response.data.errors;
+            stockData.value.errors.errors = error.response.data.errors;
             console.error(error);
         });
 }
@@ -106,4 +107,26 @@ onMounted(()=>{
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+#brandDropdown {
+  appearance: none;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+#brandDropdown::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transstockData: translateY(-50%);
+  pointer-events: none;
+}
+#brandDropdown option:checked {
+  background-color: #ddd;
+}
+</style>

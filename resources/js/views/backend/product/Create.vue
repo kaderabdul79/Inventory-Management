@@ -1,6 +1,7 @@
 <template>
     <div id="createproduct">
-        <v-container fluid>{{ product }}
+        <v-container fluid>
+            <!-- {{ product }} -->
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
                     <v-sheet>
