@@ -90,21 +90,47 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        
+        $product = Product::findOrFail($id);
+    
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'category_id' => 'required|exists:categories,id',
-            // 'size_id' => 'required|exists:sizes,id',
-            // 'brand_id' => 'required|exists:brands,id',
+            'name' => 'string|max:255',
+            'category_id' => 'exists:categories,id',
+            'size_id' => 'exists:sizes,id',
+            'brand_id' => 'exists:brands,id',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'quantity_in_stock' => 'required|integer',
+            'price' => 'numeric',
+            'quantity_in_stock' => 'integer',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-        return $request;
-        $product->update($request->all());
-
+    
+        $product->name = $request->input('name');
+        $product->category_id = $request->input('category_id');
+        $product->size_id = $request->input('size_id');
+        $product->brand_id = $request->input('brand_id');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->quantity_in_stock = $request->input('quantity_in_stock');
+        // Handle file upload if a new picture is provided
+        if ($request->hasFile('picture')) {
+            // delete existing pic
+            if ($product->picture) {
+                $existingFilePath = public_path('products_picture/' . $product->picture);
+                if (File::exists($existingFilePath)) {
+                    File::delete($existingFilePath);
+                }
+            }
+    
+            // Upload new pic
+            $file = $request->file('picture');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('products_picture', $fileName, 'public');
+            $product->picture = $fileName;
+        }
+    
+        $product->save();
+    
         return response()->json(['product' => $product], 200);
     }
 

@@ -4,8 +4,8 @@
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
                     <v-sheet>
-                        <v-sheet class="text-h4 py-2 text-center">Add Product</v-sheet>
-                        <v-form @submit.prevent="addNewProduct">
+                        <v-sheet class="text-h4 py-2 text-center">Edit Product</v-sheet>
+                        <v-form @submit.prevent="updateProduct">
                             <v-text-field v-model="product.name" label="Name" variant="outlined"></v-text-field>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('name')" v-html="product.errors.get('name')" />
                             <!--  -->
@@ -46,7 +46,7 @@
                             </select>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('category_id')" v-html="product.errors.get('category_id')" />
                             <!--  -->
-                            <v-btn type="submit" :disabled="product.busy" color="success" block>Submit</v-btn>
+                            <v-btn type="submit" color="success" block>Submit</v-btn>
                         </v-form>
                         <v-sheet>
                         </v-sheet>
@@ -67,6 +67,7 @@ import { useNotification } from "@kyvg/vue3-notification";
 const notification = useNotification()
 const router = useRouter()
 const selectedBrandId = ref(null);
+const props = defineProps(['id']);
 
 const product = ref(new Form(
     {
@@ -100,7 +101,7 @@ const categories = ref([])
 function getAllCategories(){
         axios.get('active-categories')
         .then(response => {
-            console.log(response.data.category);
+            // console.log(response.data.category);
             categories.value = response.data?.category
         } )
         .catch(error => {
@@ -121,7 +122,19 @@ const sizes = ref([])
         });
     }
 // 
-function addNewProduct() { 
+function getProduct(){
+        axios.get('products/'+props.id+'/edit')
+        .then(response => {
+            // console.log(response.data);
+            product.value.fill(response.data?.product)
+        } )
+        .catch(error => {
+            product.value.errors.errors = error.response.data.errors;
+            console.log(error);
+        });
+    }
+    // 
+function updateProduct() { 
     // 
     const formData = new FormData();
     formData.append('name', product.value.name);
@@ -133,35 +146,16 @@ function addNewProduct() {
     formData.append('size_id',product.value.size_id);
     formData.append('brand_id',product.value.brand_id);
     formData.append('picture',product.value.picture);
-    //   
-    // if not active any of this, don't send request
-    if (product.value.category_id === null || product.value.size_id === null || product.value.brand_id === null) {
-      alert('Please make active, category, size, and brand before adding the product.');
-      return;
-    }
+    
     // 
-    axios.post('products/',    formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },}
-    //  {
-    //   name: product.value.name,
-    //   description: product.value.description,
-    //   price: product.value.price,
-    //   size: product.value.size,
-    //   quantity_in_stock: product.value.quantity_in_stock,
-    //   category_id: product.value.category_id,
-    //   size_id: product.value.size_id,
-    //   brand_id: product.value.brand_id
-    // }
-    )
+    axios.put('products/'+props.id, formData, { headers: { "Content-Type": "multipart/form-data", }})
         .then(response => {
-            console.log(response);
-            notification.notify({title: "Product has been added Inventory 🎉",});
-            setTimeout(()=>{
-                router.push({name: "products"})
-            },2000)
-            console.log(response.data);
+            // console.log(response);
+            // notification.notify({title: "Product has been added Inventory 🎉",});
+            // setTimeout(()=>{
+            //     router.push({name: "products"})
+            // },2000)
+            console.log("form update func",response);
         })
         .catch(error => {
             product.value.errors.errors = error.response.data.errors;
@@ -172,6 +166,7 @@ onMounted(()=>{
         getAllBrands()
         getAllCategories()
         getAllSizes()
+        getProduct()
     })
 </script>
 
