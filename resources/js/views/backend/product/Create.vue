@@ -4,7 +4,7 @@
             <!-- {{ product }} -->
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
-                    <v-sheet>
+                    <v-sheet class="px-6 py-2">
                         <v-sheet class="text-h4 py-2 text-center">Add Product</v-sheet>
                         <v-form @submit.prevent="addNewProduct">
                             <v-text-field v-model="product.name" label="Name" variant="outlined"></v-text-field>
@@ -47,7 +47,7 @@
                             </select>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('category_id')" v-html="product.errors.get('category_id')" />
                             <!--  -->
-                            <v-btn type="submit" :disabled="product.busy" color="success" block>Submit</v-btn>
+                            <v-btn type="submit" class="my-2" color="success" block>Submit</v-btn>
                         </v-form>
                         <v-sheet>
                         </v-sheet>

@@ -1,9 +1,10 @@
 <template>
     <div id="createproduct">
-        <v-container fluid>{{ product }}
+        <v-container fluid>
+            <!-- {{ product }} -->
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
-                    <v-sheet>
+                    <v-sheet class="px-6 py-2">
                         <v-sheet class="text-h4 py-2 text-center">Edit Product</v-sheet>
                         <v-form @submit.prevent="updateProduct">
                             <v-text-field v-model="product.name" label="Name" variant="outlined"></v-text-field>
@@ -46,7 +47,7 @@
                             </select>
                             <div class="text-subtitle-2 text-red" v-if="product.errors.has('category_id')" v-html="product.errors.get('category_id')" />
                             <!--  -->
-                            <v-btn type="submit" color="success" block>Submit</v-btn>
+                            <v-btn type="submit" color="success" class="my-2" block>Submit</v-btn>
                         </v-form>
                         <v-sheet>
                         </v-sheet>
@@ -146,15 +147,15 @@ function updateProduct() {
     formData.append('size_id',product.value.size_id);
     formData.append('brand_id',product.value.brand_id);
     formData.append('picture',product.value.picture);
-    
+
     // 
     axios.put('products/'+props.id, formData, { headers: { "Content-Type": "multipart/form-data", }})
         .then(response => {
             // console.log(response);
-            // notification.notify({title: "Product has been added Inventory 🎉",});
-            // setTimeout(()=>{
-            //     router.push({name: "products"})
-            // },2000)
+            notification.notify({title: "Product has been updated 🎉",});
+            setTimeout(()=>{
+                router.push({name: "products"})
+            },2000)
             console.log("form update func",response);
         })
         .catch(error => {
