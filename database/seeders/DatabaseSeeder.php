@@ -7,6 +7,7 @@ use Database\Seeders\BrandsSeeder;
 use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\SizesSeeder;
 use Database\Seeders\StocksSeeder;
+use Database\Seeders\UsersSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             BrandsSeeder::class,
             ProductsSeeder::class,
             StocksSeeder::class,
+            UsersSeeder::class,
         ]);
     }
 }
