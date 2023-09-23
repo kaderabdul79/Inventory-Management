@@ -6,6 +6,17 @@ const router = createRouter({
     { path: "/", 
       component: () => import("../views/HomePage.vue") 
     },
+    // auth
+    { 
+      path: "/user/login", 
+      name: 'login',
+      component: () => import("../views/backend/auth/Login.vue"),
+    },
+    {
+      path: "/user/register", 
+      name: 'register',
+      component: () => import("../views/backend/auth/Registration.vue"),
+    },
     {
       path: "/dashboard",
       name: "dashboard",
