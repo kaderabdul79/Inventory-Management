@@ -3,7 +3,7 @@
         <v-container fluid>
             <v-row>
                 <v-col cols="12">
-                    <v-sheet class="d-flex justify-space-between">
+                    <v-sheet class="d-flex justify-space-between px-12 py-2">
                         <h2 class="">List of Stock Items</h2>
                         <div><v-btn :to="{name: 'createStocks'}" color="primary" class="">Add New</v-btn></div>
                     </v-sheet>

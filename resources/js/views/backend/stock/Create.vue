@@ -4,7 +4,7 @@
             <!-- {{ stockData }} -->
             <v-row>
                 <v-col cols="6" xs="12" offset="3">
-                    <v-sheet>
+                    <v-sheet class="px-4 py-2">
                         <v-sheet class="text-h4 py-2 text-center">Add Stock</v-sheet>
                         <v-form @submit.prevent="addNewStock">
                             Select Product

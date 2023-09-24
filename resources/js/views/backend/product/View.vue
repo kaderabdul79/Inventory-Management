@@ -1,5 +1,6 @@
 <template>
-    <div class="viewproduct">{{ form }}
+    <div class="viewproduct">
+        <!-- {{ form }} -->
         <v-container fluid>
             <v-row>
                 <v-col cols="12">
