@@ -13,7 +13,7 @@
                                 <div class="text-h6 mb-1">
                                     {{ user.email }}
                                 </div>
-                                <div class="text-caption">logout</div>
+                                <v-btn  @click="handleLogout" class="bg-primary my-2">Logout<v-icon>mdi mdi-logout</v-icon></v-btn>
                                 </div>
                             </v-card-item>
                         </v-card>
@@ -27,6 +27,8 @@
 import { ref,onMounted } from 'vue';
 import axios from 'axios'
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+import {useRouter} from 'vue-router'
+const router = useRouter()
 const user = ref({})
 
 const fetchUser = async () => {
@@ -53,14 +55,15 @@ const fetchUser = async () => {
 })
 
 // Logout
-const handleLogout = () => {
-    user.value = null;
-    
-    // Remove token from local storage
-    localStorage.removeItem('token');
-    
-    // Redirect to the login page
-    router.push({ name: 'login' });
+const handleLogout = async () => {
+    try {
+        // remove token
+        localStorage.removeItem('token');
+        user.value = {};
+        await router.push({ name: 'login' });
+    } catch (error) {
+        console.error('Error during logout:', error);
+    }
 };
 </script>
 

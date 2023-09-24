@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+function isAuthenticated() {
+  const token = localStorage.getItem('token');
+  return token && token.length > 0;
+}
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,15 +15,32 @@ const router = createRouter({
       path: "/user/login", 
       name: 'login',
       component: () => import("../views/backend/auth/Login.vue"),
+      // if user already login and mistakenly request for login redirect to dashboard
+      beforeEnter: (to, from, next) => {
+        isAuthenticated() ? next({ name: 'dashboard' }) : next();
+      },
     },
     {
       path: "/user/register", 
       name: 'register',
+      // if user already register and mistakenly request for register redirect to dashboard
+      beforeEnter: (to, from, next) => {
+        isAuthenticated() ? next({ name: 'dashboard' }) : next();
+      },
       component: () => import("../views/backend/auth/Registration.vue"),
     },
     {
       path: "/dashboard",
       name: "dashboard",
+      redirect: {name: 'dashboardOverview'},
+      // if token is available, can access all the children route, if not redirect to login
+      beforeEnter: (to, from, next) => {
+        if (isAuthenticated()) {
+          next();
+        } else {
+          next({ name: 'login' });
+        }
+      },
       component: () => import("../views/backend/Dashboard.vue"),
       children: [
         {
