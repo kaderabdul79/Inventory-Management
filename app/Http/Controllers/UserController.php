@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Size;
+use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,6 +95,20 @@ class UserController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+    // get an overview total item for each table , show in dashboard overview
+    public function overview()
+    {
+        $overviews = [
+            'products' => Product::count(),
+            'categories' => Category::count(),
+            'sizes' => Size::count(),
+            'brands' => Brand::count(),
+            'stocks' => Stock::count(),
+        ];
+
+        return response()->json(['overviews' => $overviews], 200);
     }
 
     public function index()

@@ -30,6 +30,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
 Route::middleware('auth:sanctum')->delete('/logout', [UserController::class, 'logout']);
+Route::get('/overview', [UserController::class, 'overview']);
 
 // Categories
 Route::resource('categories', CategoryController::class);
