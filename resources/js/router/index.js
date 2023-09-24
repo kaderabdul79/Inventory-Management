@@ -111,6 +111,11 @@ const router = createRouter({
           name: 'createStocks',
           component: () => import('../views/backend/stock/Create.vue'),
         },
+        { 
+          path: "/user/account", 
+          name: 'user',
+          component: () => import("../views/backend/auth/User.vue") ,
+        },
       ]
     },
   ]

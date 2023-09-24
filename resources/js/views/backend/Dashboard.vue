@@ -32,6 +32,7 @@
                     prepend-icon="mdi-account"
                     title="My Account"
                     value="account"
+                    to="/user/account"
                 ></v-list-item>
                 <v-list-group value="Users">
                     <template v-slot:activator="{ props }">
@@ -134,50 +135,15 @@
                     value="products"
                 ></v-list-item>
             </v-list>
-
-            <v-list-item
-                class="logout"
-                prepend-icon="mdi mdi-logout"
-                title="Logout"
-                value="logout"
-            ></v-list-item>
+            <v-btn  @click="handleLogout" class="bg-primary ml-15 my-50">Logout<v-icon>mdi mdi-logout</v-icon></v-btn>
         </v-navigation-drawer>
         <!-- drawer -->
         <v-app-bar class="px-2" :elevation="2" background="#26A69A">
             <div class="my-header w-100" background="#26A69A">
-            <div class="pt-2">Inventory Management</div>
-            <div class="profile">
-                <v-avatar size="36px">
-                    <v-img
-                        alt="Avatar"
-                        src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-                    ></v-img>
-                </v-avatar>
-                <span class="ml-2 subtitle-2">Abdul Kader</span>
+            <div class="subtitle-2">Inventory Management</div>
+            <div class="profile"> Hello,
+                <span class="ml-2 subtitle-2">{{ user.name }}</span>
                 <!--  -->
-                <v-menu>
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            size="small"
-                            variant="text"
-                            icon="mdi-menu-down"
-                            :ripple="false"
-                            v-bind="props"
-                        ></v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item
-                            prepend-icon="mdi-account"
-                            title="Users Profile"
-                            value="users"
-                        ></v-list-item>
-                        <v-list-item
-                            prepend-icon="mdi mdi-logout"
-                            title="Logout"
-                            value="Logout"
-                        ></v-list-item>
-                    </v-list>
-                </v-menu>
             </div></div>
         </v-app-bar>
         <!-- rendering all other dashboard pages/components from here -->
@@ -187,7 +153,49 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,onMounted } from 'vue';
+import axios from 'axios'
+axios.defaults.baseURL = "http://127.0.0.1:8000/api/"
+import {useRouter} from 'vue-router'
+const router = useRouter()
+const user = ref({})
+
+const fetchUser = async () => {
+    try {
+        const storedToken = localStorage.getItem('token');
+
+        if (storedToken) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+            
+            const response = await axios.get('/user');
+            user.value = response.data.data;
+            // console.log("from fetchuser",user.value);
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        if (error.response && error.response.status === 401) {
+            handleLogout();
+        }
+    }
+};
+
+// Logout
+const handleLogout = async () => {
+    try {
+        // remove token
+        localStorage.removeItem('token');
+        user.value = {};
+        await router.push({ name: 'login' });
+    } catch (error) {
+        console.error('Error during logout:', error);
+    }
+};
+
+// 
+ onMounted(()=>{
+    fetchUser()
+})
+// 
 const profileDrawer = ref(false);
 const drawer = ref(true);
 const rail = ref(true);
