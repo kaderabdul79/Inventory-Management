@@ -25,8 +25,9 @@
             <v-list density="compact" nav>
                 <v-list-item
                     prepend-icon="mdi-home-city"
-                    title="Home"
-                    value="home"
+                    title="Dashboard"
+                    value="dashboard"
+                    to="/dashboard"
                 ></v-list-item>
                 <v-list-item
                     prepend-icon="mdi-account"
@@ -34,31 +35,12 @@
                     value="account"
                     to="/user/account"
                 ></v-list-item>
-                <v-list-group value="Users">
-                    <template v-slot:activator="{ props }">
-                        <v-list-item
-                            v-bind="props"
-                            prepend-icon="mdi-account-group-outline"
-                            title="Users"
-                        ></v-list-item>
-                    </template>
-
-                    <v-list-item
-                        v-for="user in users"
-                        :key="user.id"
-                        :title="user.title"
-                        :prepend-icon="user.icon"
-                        :value="user.title"
-                        :to="{name: user.name}"
-                    ></v-list-item>
-                </v-list-group>
-                <!-- users end -->
                 <!-- brands -->
                 <v-list-group value="brands">
                     <template v-slot:activator="{ props }">
                         <v-list-item
                             v-bind="props"
-                            prepend-icon="mdi-account-group-outline"
+                            prepend-icon="mdi mdi-watermark"
                             title="brands"
                         ></v-list-item>
                     </template>
@@ -77,7 +59,7 @@
                     <template v-slot:activator="{ props }">
                         <v-list-item
                             v-bind="props"
-                            prepend-icon="mdi-account-group-outline"
+                            prepend-icon="mdi mdi-shape"
                             title="categories"
                         ></v-list-item>
                     </template>
@@ -96,7 +78,7 @@
                     <template v-slot:activator="{ props }">
                         <v-list-item
                             v-bind="props"
-                            prepend-icon="mdi-account-group-outline"
+                            prepend-icon="mdi mdi-size-s"
                             title="sizes"
                         ></v-list-item>
                     </template>
@@ -115,7 +97,7 @@
                     <template v-slot:activator="{ props }">
                         <v-list-item
                             v-bind="props"
-                            prepend-icon="mdi-account-group-outline"
+                            prepend-icon="mdi-shopping"
                             title="products"
                         ></v-list-item>
                     </template>
@@ -131,8 +113,9 @@
                 </v-list-group>
                 <v-list-item
                     prepend-icon="mdi-account-group-outline"
-                    title="products"
-                    value="products"
+                    title="Stocks"
+                    value="stocks"
+                    to="stocks"
                 ></v-list-item>
             </v-list>
             <v-btn  @click="handleLogout" class="bg-primary ml-15 my-50">Logout<v-icon>mdi mdi-logout</v-icon></v-btn>
@@ -202,16 +185,7 @@ const rail = ref(true);
 function profileDrawerChange() {
     return (profileDrawer.value = !profileDrawer.value);
 }
-const items = ref([
-    { title: "Click Me" },
-    { title: "Click Me" },
-    { title: "Click Me" },
-    { title: "Click Me 2" },
-]);
-const users = ref([
-    { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline"},
-    { id: 2, title: "Create User", icon: "mdi mdi-plus" },
-]);
+
 const brands = ref([
     { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline", name: "brands"},
     { id: 2, title: "Create brands", icon: "mdi mdi-plus", name: "createBrand" },
@@ -226,7 +200,7 @@ const sizes = ref([
 ]);
 const products = ref([
     { id: 1, title: "Manage", icon: "mdi mdi-controller-classic-outline", name: "products"},
-    { id: 2, title: "Create sizes", icon: "mdi mdi-plus", name: "createProduct"},
+    { id: 2, title: "Create Product", icon: "mdi mdi-plus", name: "createProduct"},
 ]);
 </script>
 
