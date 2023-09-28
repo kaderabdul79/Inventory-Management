@@ -115,7 +115,7 @@
                     prepend-icon="mdi-account-group-outline"
                     title="Stocks"
                     value="stocks"
-                    to="stocks"
+                    to="/dashboard/stocks"
                 ></v-list-item>
             </v-list>
             <v-btn  @click="handleLogout" class="bg-primary ml-15 my-50">Logout<v-icon>mdi mdi-logout</v-icon></v-btn>

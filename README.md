@@ -29,7 +29,7 @@ Web app for efficient inventory management using Laravel and Vue.js.
 *Caption: Overview of inventory.*
 
 ### 2. Product Management
-![Inventory Management Product Management](/showcase/Inventory-management-products.PNG)
+![Inventory Management Product Management](/showcase/Inventory-management-products.PNG)(/showcase/Inventory-management-addproducts.PNG)
 *Caption: Manage products with ease, associating them with categories, sizes, and brands.*
 
 ### 3. Category Management
@@ -45,7 +45,7 @@ Web app for efficient inventory management using Laravel and Vue.js.
 *Caption: Manage product brands, allowing for brand-specific analysis.*
 
 ### 6. Stock Management
-![Inventory Management Stock Management](/showcase/inventory-management-stock-management.png)
+![Inventory Management Stock Management](/showcase/Inventory-management-stocks.PNG)
 *Caption: Keep track of stock levels for each product, monitoring changes over time.*
 
 ### 7. Product Search (under development)
