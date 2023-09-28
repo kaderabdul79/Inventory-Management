@@ -21,12 +21,12 @@ Web app for efficient inventory management using Laravel and Vue.js.
 
 - **Search Functionality:**
   - Quickly search products.
-  
+
 ## Showcase
 
 ### 1. Dashboard
-![Inventory Management Dashboard](/showcase/Inventory-management-dashboard.png)
-*Caption: Overview of your inventory, displaying key metrics and insights.*
+![Inventory Management Dashboard](/showcase/Inventory-management-dashboard.PNG)
+*Caption: Overview of inventory.*
 
 ### 2. Product Management
 ![Inventory Management Product Management](/showcase/Inventory-management-products.PNG)
@@ -48,9 +48,9 @@ Web app for efficient inventory management using Laravel and Vue.js.
 ![Inventory Management Stock Management](/showcase/inventory-management-stock-management.png)
 *Caption: Keep track of stock levels for each product, monitoring changes over time.*
 
-### 7. Product Search
+### 7. Product Search (under development)
 ![Inventory Management Product Search](/showcase/inventory-management-product-search.png)
-*Caption: Efficiently search for products by name or description.*
+*Caption: search for products by name or description.*
 
 #### 8. Registration
 ![Inventory Management JobMemo Registration](/showcase/Inventory-management-registration.PNG)
